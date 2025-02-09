@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "Insertion.C": "cpp",
+    "Deletion.C": "cpp",
+    "Traversal.C": "cpp",
+    "Array.C": "cpp",
+    "Stack.C": "cpp",
+    "CircularQueue.C": "cpp"
+  }
+}
