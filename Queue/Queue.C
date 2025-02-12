@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define max 5
-int rear = -1; 
-int front = -1; 
+int rear = -1;
+int front = -1;
 int queue[max];
 
 void Insert();
@@ -33,7 +33,7 @@ int main()
         default:
             printf("\nINVALID CHOICE");
         }
-        Display(); 
+        Display();
     } while (choice < 4);
 
     return 0;
@@ -49,7 +49,7 @@ void Insert()
     }
     printf("\nENTER VALUE: ");
     scanf("%d", &value);
-    if (front == -1) 
+    if (front == -1)
         front = 0;
     rear++;
     queue[rear] = value;
@@ -65,7 +65,7 @@ void Delete()
     }
     printf("\n%d IS DELETED", queue[front]);
     front++;
-    if (front > rear) 
+    if (front > rear)
     {
         front = -1;
         rear = -1;

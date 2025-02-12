@@ -5,6 +5,16 @@
     "Traversal.C": "cpp",
     "Array.C": "cpp",
     "Stack.C": "cpp",
-    "CircularQueue.C": "cpp"
+    "CircularQueue.C": "cpp",
+    "Queue.C": "cpp",
+    "DEQueue.C": "cpp",
+    "Practice.C": "cpp",
+    "SinglyLinkedList.C": "cpp",
+    "CircularLinkedList.C": "cpp",
+    "BinarySearch.C": "cpp",
+    "LinearSearch.C": "cpp",
+    "SelectionSort.C": "cpp",
+    "BubbleSort.C": "cpp",
+    "InsertionSort.C": "cpp"
   }
 }

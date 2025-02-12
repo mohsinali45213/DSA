@@ -1,18 +1,18 @@
 #include <stdio.h>
+#include <conio.h>
 #include <stdlib.h>
-
 struct Node
 {
   int data;
   struct Node *next;
 };
 
-struct Node *createnode(int value)
+struct Node *createNode(int value)
 {
   struct Node *newnode = (struct Node *)malloc(sizeof(struct Node));
   if (newnode == NULL)
   {
-    printf("Memory Allocation Failed...\n");
+    printf("Memory allocation fail...");
     exit(1);
   }
   newnode->data = value;
@@ -20,125 +20,108 @@ struct Node *createnode(int value)
   return newnode;
 }
 
-void insertAtFirst(struct Node **head, int value)
+void insertFirst(struct Node **head, int value)
 {
-  struct Node *newnode = createnode(value);
+  struct Node *newnode = createNode(value);
+  newnode->next = *head;
+  *head = newnode;
+}
+
+void insertLast(struct Node **head, int value)
+{
+  struct Node *newnode = createNode(value);
+  struct Node *temp = *head;
   if (*head == NULL)
   {
     *head = newnode;
-    newnode->next = *head;
+    return;
+  }
+  while (temp->next != NULL)
+  {
+    temp = temp->next;
+  }
+  temp->next = newnode;
+}
+
+void insertMiddle(struct Node **head, int value, int index)
+{
+  struct Node *newnode = createNode(value);
+  struct Node *temp = *head;
+  if (*head == NULL)
+  {
+    *head = newnode;
+    return;
+  }
+  int i = 1;
+  while (temp->next != NULL && i < index - 1)
+  {
+    temp = temp->next;
+    i++;
+  }
+  newnode->next = temp->next;
+  temp->next = newnode;
+}
+
+void deleteFirst(struct Node **head)
+{
+  struct Node *temp = *head;
+  if (*head == NULL)
+  {
+    printf("\nLinkedList is empty");
+    return;
   }
   else
   {
-    struct Node *temp = *head;
-    while (temp->next != *head)
+    *head = temp->next;
+  }
+  free(temp);
+}
+
+void deleteLast(struct Node **head)
+{
+  struct Node *temp = *head;
+  if (*head == NULL)
+  {
+    printf("\nLinkedList is empty");
+    return;
+  }
+
+  if (temp->next == NULL)
+  {
+    free(temp);
+    *head = NULL;
+  }
+  else
+  {
+    while (temp->next->next != NULL)
     {
       temp = temp->next;
     }
-    newnode->next = *head;
-    temp->next = newnode;
-    *head = newnode;
   }
+  free(temp->next);
+  temp->next = NULL;
 }
 
-void insertAtEnd(struct Node **head, int value)
+void deleteMiddle(struct Node **head, int index)
 {
-  struct Node *newnode = createnode(value);
+  struct Node *temp = *head;
   if (*head == NULL)
   {
-    *head = newnode;
-    newnode->next = *head;
+    printf("\nLinkedList is empty");
+    return;
+  }
+  if (index == 0)
+  {
+    free(temp);
+    *head = NULL;
   }
   else
   {
-    struct Node *temp = *head;
-    while (temp->next != *head)
-    {
-      temp = temp->next;
-    }
-    temp->next = newnode;
-    newnode->next = *head;
-  }
-}
-
-void insertAtMiddle(struct Node **head, int value, int index)
-{
-  struct Node *newnode = createnode(value);
-  if (*head == NULL)
-  {
-    *head = newnode;
-    newnode->next = *head;
-  }
-  else
-  {
-    struct Node *temp = *head;
-    int i=1;
-    while(temp->next != *head && i<index-1)
+    int i = 1;
+    while (temp->next != NULL && i < index - 1)
     {
       temp = temp->next;
       i++;
-    }
-    newnode->next = temp->next;
-    temp->next = newnode;
-  }
-}
-
-void deleteAtFirst(struct Node **head)
-{
-  if(*head ==NULL){
-    printf("\nLinkedlist is Empty");
-  }
-  else
-  {
-    struct Node *temp=*head;
-    *head = temp->next;
-    free(temp);
-  }
-}
-
-void deleteAtEnd(struct Node **head)
-{
-  struct Node *temp = *head;
-  if(*head ==NULL)
-  {
-    printf("\nLinkedlist is Empty");
-  }
-
-  if(temp->next==*head)
-  {
-    free(temp);
-    *head = NULL;
-  }
-  else
-  {
-    while(temp->next->next != *head)
-    {
-      temp = temp->next;
-    }
-    free(temp->next);
-    temp->next = *head;
-  }
-}
-
-void deleteAtMiddle(struct Node **head,int index)
-{
-  struct Node *temp = *head;
-  if(*head ==NULL)
-  {
-    printf("\nLinkedlist is Empty");
-  }
-
-  if(temp->next==*head)
-  {
-    free(temp);
-    *head = NULL;
-  }
-  else
-  {
-    int i=1;
-    while(temp->next != *head  && i<index-1)
-    {
-      temp = temp->next;
     }
     struct Node *q = temp->next;
     temp->next = q->next;
@@ -150,24 +133,23 @@ void display(struct Node *head)
 {
   if (head == NULL)
   {
-    printf("LinkedList is empty");
+    printf("\nLinkedlist is Empty");
+    return;
   }
-  else
+  printf("\nElement : ");
+  while (head != NULL)
   {
-    printf("\nELEMENTS : ");
-    struct Node *temp = head;
-    do
-    {
-      printf("%d ", temp->data);
-      temp = temp->next;
-    }while (temp != head);
+    printf("%d  ", head->data);
+    head = head->next;
   }
 }
+
 int main()
 {
+  // head is a pointer of Node structure
+  // Use to store address of first node
   struct Node *head = NULL;
-  int choice, index, value;
-
+  int choice, value, index;
   while (1)
   {
     printf("\nMenu:\n");
@@ -187,13 +169,13 @@ int main()
     case 1:
       printf("Enter value to insert: ");
       scanf("%d", &value);
-      insertAtFirst(&head, value);
+      insertFirst(&head, value);
       display(head);
       break;
     case 2:
       printf("Enter value to insert: ");
       scanf("%d", &value);
-      insertAtEnd(&head, value);
+      insertLast(&head, value);
       display(head);
       break;
     case 3:
@@ -201,21 +183,21 @@ int main()
       scanf("%d", &value);
       printf("Enter index to insert: ");
       scanf("%d", &index);
-      insertAtMiddle(&head, value, index);
+      insertMiddle(&head,value,index);
       display(head);
       break;
     case 4:
-      deleteAtFirst(&head);
+      deleteFirst(&head);
       display(head);
       break;
     case 5:
-      deleteAtEnd(&head);
+      deleteLast(&head);
       display(head);
       break;
     case 6:
       printf("Enter index to delete: ");
       scanf("%d", &index);
-      deleteAtMiddle(&head, index);
+      deleteMiddle(&head, index);
       display(head);
       break;
     case 7:
