@@ -4,6 +4,7 @@
 struct Node
 {
   int data;
+  struct Node *prev;
   struct Node *next;
 };
 void insertFirst(int);
@@ -85,142 +86,130 @@ struct Node *createNode(int value)
   }
   newnode->data = value;
   newnode->next = NULL;
+  newnode->prev = NULL;
   return newnode;
 }
 
 void insertFirst(int value)
 {
   struct Node *newnode = createNode(value);
-  if (head == NULL)
+  if (head != NULL)
   {
-    newnode->next = newnode;
-    head = newnode;
+    head->prev = newnode;
   }
-  else
-  {
-    struct Node *temp = head;
-    while (temp->next != head)
-    {
-      temp = temp->next;
-    }
-    temp->next = newnode;
-    newnode->next = head;
-    head = newnode;
-  }
+  newnode->next = head;
+  head = newnode;
 }
 
 void insertLast(int value)
 {
+
   struct Node *newnode = createNode(value);
+  struct Node *temp = head;
   if (head == NULL)
   {
-    newnode->next = newnode;
     head = newnode;
   }
   else
   {
-    struct Node *temp = head;
-    while (temp->next != head)
+    while (temp->next != NULL)
     {
       temp = temp->next;
     }
     temp->next = newnode;
-    newnode->next = head;
+    newnode->prev = temp;
   }
 }
 
 void insertMiddle(int value, int index)
 {
   struct Node *newnode = createNode(value);
+  struct Node *temp = head;
   if (head == NULL)
   {
-    newnode->next = newnode;
     head = newnode;
   }
   else
   {
-    struct Node *temp = head;
     int i = 1;
-    while (temp->next != head && i < index - 1)
+    while (temp->next != NULL && i < index - 1)
     {
       temp = temp->next;
       i++;
     }
     newnode->next = temp->next;
+    newnode->prev = temp;
+    temp->next->prev= newnode;
     temp->next = newnode;
   }
 }
 
 void deleteFirst()
 {
+  struct Node *temp = head;
   if (head == NULL)
   {
-    printf("\nLinkedlist is empty\n");
+    printf("\nLinkedList is empty\n");
   }
-  else if (head->next == head)
+  else if (temp->next == NULL)
   {
-    free(head);
+    free(temp);
     head = NULL;
   }
   else
   {
-    struct Node *temp = head, *last = head;
-    while (last->next != head)
-    {
-      last = last->next;
-    }
-    head = head->next;
-    last->next = head;
+    head = temp->next;
+    head->prev = NULL;
     free(temp);
   }
 }
 
 void deleteLast()
 {
+  struct Node *temp = head;
   if (head == NULL)
   {
-    printf("\nLinkedlist is empty\n");
+    printf("\nLinkedList is empty\n");
   }
-  else if (head->next == head)
+  else if (temp->next == NULL)
   {
-    free(head);
+    free(temp);
     head = NULL;
   }
   else
   {
-    struct Node *last = head;
-    while (last->next->next != head)
+    while (temp->next->next != NULL)
     {
-      last = last->next;
+      temp = temp->next;
     }
-    struct Node *temp = last->next;
-    last->next = last->next->next;
-    free(temp);
+    free(temp->next);
+    temp->next = NULL;
   }
 }
 
 void deleteMiddle(int index)
 {
+  struct Node *temp = head;
   if (head == NULL)
   {
-    printf("\nLinkedlist is empty\n");
+    printf("\nLinkedList is empty\n");
   }
-  else if (head->next == head)
+  else if (temp->next == NULL)
   {
-    free(head);
+    free(temp);
     head = NULL;
   }
   else
   {
-    struct Node *temp = head;
     int i = 1;
-    while (temp->next != head && i < index - 2)
+    while (temp->next != NULL && i < index - 1)
     {
       temp = temp->next;
       i++;
     }
     struct Node *q = temp->next;
     temp->next = temp->next->next;
+    temp->next->prev = temp;
     free(q);
   }
 }
@@ -229,14 +218,24 @@ void display()
 {
   if (head == NULL)
   {
-    printf("Linkedlist is empty\n");
-    return;
+    printf("\nLinkedList is empty\n");
   }
-  struct Node *temp = head;
-  printf("\nElement of Linkedlist\n");
-  do
+  else
   {
-    printf("%d  ", temp->data);
-    temp = temp->next;
-  } while (temp != head);
+    struct Node *temp = head;
+    printf("\nElement : \n");
+    while (temp->next!= NULL)
+    {
+      printf("%d ", temp->data);
+      temp = temp->next;
+    }
+    printf("%d ",temp->data);
+    printf("\n Reverse Element : ");
+    while (temp != NULL)
+    {
+      printf("%d ", temp->data);
+      temp = temp->prev;
+    }
+    printf("\n");
+  }
 }

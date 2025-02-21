@@ -15,6 +15,10 @@
     "LinearSearch.C": "cpp",
     "SelectionSort.C": "cpp",
     "BubbleSort.C": "cpp",
-    "InsertionSort.C": "cpp"
+    "InsertionSort.C": "cpp",
+    "PriorityQueue.C": "cpp",
+    "tempCodeRunnerFile.C": "cpp",
+    "DoublyLinkedList.C": "cpp",
+    "QuickSort.C": "cpp"
   }
 }
