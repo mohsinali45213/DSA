@@ -19,6 +19,8 @@
     "PriorityQueue.C": "cpp",
     "tempCodeRunnerFile.C": "cpp",
     "DoublyLinkedList.C": "cpp",
-    "QuickSort.C": "cpp"
+    "QuickSort.C": "cpp",
+    "MergeSort.C": "cpp",
+    "BFS.C": "cpp"
   }
 }
