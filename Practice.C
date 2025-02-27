@@ -1,69 +1,77 @@
 #include <stdio.h>
-#include <conio.h>
-void display(int arr[], int size)
+#define max 5
+int rear = -1;
+int front = -1;
+int queue[max];
+
+int isEmpty()
 {
-  for (int i = 0; i < size; i++)
-  {
-    printf("%d  ", arr[i]);
-  }
-  printf("\n");
+  return front == -1 || front > rear;
 }
 
-void merge(int arr[], int low, int mid, int high)
+int isFull()
 {
-  int i, j, k, temp[high + 1];
-  i = low;
-  j = mid + 1;
-  k = low;
-  while (i <= mid && j <= high)
-  {
-    if (arr[i] < arr[j])
-    {
-      temp[k] = arr[i];
-      i++;
-      k++;
-    }
-    else
-    {
-      temp[k] = arr[j];
-      j++;
-      k++;
-    }
-  }
-  while (i <= mid)
-  {
-    temp[k] = arr[i];
-    i++;
-    k++;
-  }
-  while (j <= high)
-  {
-    temp[k] = arr[j];
-    j++;
-    k++;
-  }
-  for (i = low; i <=high; i++)
-  {
-    arr[i] = temp[i];
-  }
+  return rear == max - 1;
 }
 
-void mergesort(int arr[], int low, int high)
+void Insert(int value)
 {
-  if (low < high)
+  if (isFull())
   {
-    int mid = (low + high) / 2;
-    mergesort(arr, low, mid);
-    mergesort(arr, mid + 1, high);
-    merge(arr, low, mid, high);
+    printf("\nQUEUE IS FULL");
+    return;
   }
+  if (front == -1)
+    front = 0;
+  rear++;
+  queue[rear] = value;
+}
+
+int Delete()
+{
+  if (isEmpty())
+  {
+    printf("\nQUEUE IS EMPTY");
+    return 0;
+  }
+  int no = queue[front];
+  front++;
+  if (front > rear)
+  {
+    front = -1;
+    rear = -1;
+  }
+  return no;
 }
 
 int main()
 {
-  int arr[] = {80, 70, 70, 54, 23, 27, 12, 56, 43};
-  int size = sizeof(arr) / sizeof(int), j, key, i;
-  display(arr, size);
-  mergesort(arr, 0, size - 1);
-  display(arr, size);
+  int node;
+  int i = 0;
+  int visited[] = {0, 0, 0, 0, 0, 0, 0};
+  int a[7][7] = {
+      {0, 1, 1, 1, 0, 0, 0},
+      {1, 0, 1, 0, 0, 0, 0},
+      {1, 1, 0, 1, 1, 0, 0},
+      {1, 0, 1, 0, 1, 0, 0},
+      {0, 0, 1, 1, 0, 1, 1},
+      {0, 0, 0, 0, 1, 0, 0},
+      {0, 0, 0, 0, 1, 0, 0}};
+  printf("%d ", i);
+  visited[i] = 1;
+  Insert(i);
+
+  while (!isEmpty())
+  {
+    node = Delete();
+    for (int j = 0; j < 7; j++)
+    {
+      if (a[node][j] == 1 && visited[j] == 0)
+      {
+        visited[j] = 1;
+        printf("%d ", j);
+        Insert(j);
+      }
+    }
+  }
 }

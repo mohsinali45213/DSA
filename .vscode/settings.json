@@ -21,6 +21,7 @@
     "DoublyLinkedList.C": "cpp",
     "QuickSort.C": "cpp",
     "MergeSort.C": "cpp",
-    "BFS.C": "cpp"
+    "BFS.C": "cpp",
+    "DFS.C": "cpp"
   }
 }
