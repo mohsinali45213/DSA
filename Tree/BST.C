@@ -43,7 +43,7 @@ int isBST(struct node *root)
     return 1;
   }
 }
-
+// Using recursion
 void BST(struct node *root, int key)
 {
   if (root == NULL)
@@ -64,6 +64,28 @@ void BST(struct node *root, int key)
   {
     BST(root->right, key);
   }
+}
+
+// Using iteration
+void searchIter(struct node *root, int key)
+{
+  while (root != NULL)
+  {
+    if (root->data == key)
+    {
+      printf("Found : %d", root->data);
+      return;
+    }
+    else if (root->data > key)
+    {
+      root = root->left;
+    }
+    else
+    {
+      root=root->right;
+    }
+  }
+  return;
 }
 
 int main()
@@ -87,6 +109,7 @@ int main()
   {
     printf("It is a valid BST...\n");
     BST(root, 3);
+    searchIter(root,3);
   }
   else
   {
