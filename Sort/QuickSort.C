@@ -8,7 +8,7 @@ int partition(int arr[], int low, int high)
   int j = high;
   int temp;
 
-  do
+  while (i <= j)
   {
     while (arr[i] <=pivot)
     {
@@ -24,7 +24,7 @@ int partition(int arr[], int low, int high)
       arr[i] = arr[j];
       arr[j] = temp;
     }
-  } while (i < j);
+  }
   if (arr[j] < arr[low])
   {
     temp = arr[low];
@@ -56,7 +56,7 @@ void printArray(int arr[], int size)
 
 int main()
 {
-  int arr[] = {9, 3, 7, 5, 3, 3, 6, 2, 1};
+  int arr[] = {9,9,8,5,7,3,1,6,8,6,3,7};
   int size = sizeof(arr) / sizeof(int);
   printArray(arr, size);
   quicksort(arr, 0, size - 1);

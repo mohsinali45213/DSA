@@ -22,6 +22,16 @@
     "QuickSort.C": "cpp",
     "MergeSort.C": "cpp",
     "BFS.C": "cpp",
-    "DFS.C": "cpp"
+    "DFS.C": "cpp",
+    "TreeTraversal.C": "cpp",
+    "BST.C": "cpp",
+    "Operation.C": "cpp",
+    "Create.C": "cpp",
+    "A2.C": "cpp",
+    "B2.C": "cpp",
+    "BSTOperation.C": "cpp",
+    "A3.C": "cpp",
+    "A4.C": "cpp",
+    "B6.C": "cpp"
   }
 }
